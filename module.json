@@ -1,0 +1,34 @@
+{
+  "name": "message-center",
+  "version": "0.0.1",
+  "description": "Hub for passing data between services on one or more MCUs.",
+  "keywords": [],
+  "author": "Marcus Chang <marcus.chang@arm.com>",
+  "repository": {
+    "url": "git@github.com:ARMmbed/message-center.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/message-center",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    }
+  ],
+  "dependencies": {
+    "message-center-transport": "~0.1.0",
+    "core-util": "^1.0.0",
+    "mbed-block": "^1.0.0"
+  },
+  "targetDependencies": {
+    "k64f": {
+      "message-center-transport-spi-master": "~0.2.0"
+    },
+    "nrf51dk": {
+      "message-center-transport-spi-slave": "^1.0.0"
+    }
+  },
+  "testDependencies": {
+    "mbed-drivers": "~0.11.0"
+  }
+}
