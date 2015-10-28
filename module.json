@@ -1,6 +1,6 @@
 {
   "name": "message-center",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Hub for passing data between services on one or more MCUs.",
   "keywords": [],
   "author": "Marcus Chang <marcus.chang@arm.com>",
