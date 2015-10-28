@@ -20,7 +20,6 @@
 
 #include "message-center-transport/MessageCenterTransport.h"
 
-#include "core-util/SharedPointer.h"
 #include "core-util/FunctionPointer.h"
 
 #include <stdint.h>
@@ -34,21 +33,46 @@ namespace MessageCenter
     typedef struct {
         uint8_t host;
         uint16_t port;
-        BlockStatic* block;
+        BlockStatic block;
         FunctionPointer0<void> callback;
     } transaction_t;
 
     typedef enum {
-        LocalHost = 0,
-        RemoteHost = 1
+        RemoteHost = 0x00,
+        LocalHost  = 0xFF
     } host_t;
 
+    /*
+        Add new transport link between local MCU and remote MCU.
+        uint8_t host                      - Host ID, only local and 1 remote supported.
+        MessageCenterTransport* transport - Object implementing the transport protocol.
+    */
     void addTransportTask(uint8_t host, MessageCenterTransport* transport);
 
-    void sendTask(uint8_t host, uint16_t port, BlockStatic* block, FunctionPointer0<void> callback);
+    /*
+        Send block of data to specified MCU and port.
+        uint8_t host                      - Host ID, only local and 1 remote supported.
+        uint16_t port                     - Port to send to.
+        BlockStatic& block                - Block to send.
+        FunctionPointer0<void> callback   - Callback function when send is done.
+    */
+    void sendTask(uint8_t host, uint16_t port, BlockStatic& block, FunctionPointer0<void> callback);
 
-    void addListenerTask(uint8_t host, uint16_t port, FunctionPointer1<void, SharedPointer<Block> > callback);
-    void removeListenerTask(uint8_t host, uint16_t port, FunctionPointer1<void, SharedPointer<Block> > callback);
+    /*
+        Add function to be called when blocks are send to the given port on the given host.
+        uint8_t host                                 - Host ID, only local host supported.
+        uint16_t port                                - Port to listen to.
+        FunctionPointer1<void, BlockStatic> callback - Callback for handling block.
+    */
+    void addListenerTask(uint8_t host, uint16_t port, FunctionPointer1<void, BlockStatic> callback);
+
+    /*
+        Remove previously registrered callback function.
+        uint8_t host                                 - Host ID, only local host supported.
+        uint16_t port                                - Port registered to.
+        FunctionPointer1<void, BlockStatic> callback - Callback to be removed.
+    */
+    void removeListenerTask(uint8_t host, uint16_t port, FunctionPointer1<void, BlockStatic> callback);
 }
 
 

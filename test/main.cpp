@@ -63,12 +63,12 @@ static Ticker ticker;
 
 
 
-void receivedBlock(SharedPointer<Block> block)
+void receivedBlock(BlockStatic block)
 {
-    printf("main:received: %p\r\n", &(block->at(0)));
-    for (std::size_t idx = 0; idx < block->getLength(); idx++)
+    printf("main:received: %p\r\n", block.getData());
+    for (std::size_t idx = 0; idx < block.getLength(); idx++)
     {
-        printf("%02X", block->at(idx));
+        printf("%02X", block.at(idx));
     }
     printf("\r\n");
 }
@@ -92,7 +92,7 @@ void button1Task()
         block.at(idx) = idx;
     }
 
-    MessageCenter::sendTask(MessageCenter::RemoteHost, 1234, &block, sendDone);
+    MessageCenter::sendTask(MessageCenter::RemoteHost, 1234, block, sendDone);
 }
 
 void button1ISR()
@@ -110,7 +110,7 @@ void button2Task()
         block.at(idx) = idx;
     }
 
-    MessageCenter::sendTask(MessageCenter::LocalHost, 1234, &block, sendDone);
+    MessageCenter::sendTask(MessageCenter::LocalHost, 1234, block, sendDone);
 }
 
 void button2ISR()
