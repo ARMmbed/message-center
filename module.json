@@ -25,7 +25,7 @@
       "message-center-transport-spi-master": "^2.0.0"
     },
     "nrf51-generic": {
-      "message-center-transport-spi-slave": "^3.0.0"
+      "message-center-transport-spi-slave": "^4.0.0"
     }
   },
   "testDependencies": {
