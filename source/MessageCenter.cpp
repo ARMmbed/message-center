@@ -16,10 +16,15 @@
 
 #include "message-center/MessageCenter.h"
 
-
 #include <queue>
 #include <map>
 
+// control debug output
+#if 0
+#define DEBUGOUT(...) { printf(__VA_ARGS__); }
+#else
+#define DEBUGOUT(...) /* nothing */
+#endif // DEBUGOUT
 
 #define MAX_TRANSPORT_CONNECTIONS 1
 
@@ -61,6 +66,8 @@ namespace MessageCenter
     */
     void sendTask(uint8_t host, uint16_t port, BlockStatic& block, FunctionPointer0<void> callback)
     {
+//        DEBUGOUT("sendTask\r\n");
+
         // if host is local, bypass queue and send directly through dispatch
         if (host == LocalHost)
         {
@@ -118,6 +125,8 @@ namespace MessageCenter
 */
 static void processQueueTask()
 {
+//    DEBUGOUT("processQueueTask\r\n");
+
     // only process if queue is not empty
     if (sendQueue.size() > 0)
     {
@@ -174,7 +183,7 @@ static void dispatchBlockCommand(uint16_t port, BlockStatic block)
     }
     else
     {
-        printf("MessageCenter: port not in use: %u\r\n", port);
+        DEBUGOUT("MessageCenter: port not in use: %u\r\n", port);
     }
 }
 

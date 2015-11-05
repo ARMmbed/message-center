@@ -42,6 +42,12 @@ namespace MessageCenter
         LocalHost  = 0xFF
     } host_t;
 
+    typedef enum {
+        ANCSPort  = 0x0110,
+        EquipPort = 0x0120,
+        ProxyPort = 0x0130
+    } port_t;
+
     /*
         Add new transport link between local MCU and remote MCU.
         uint8_t host                      - Host ID, only local and 1 remote supported.
