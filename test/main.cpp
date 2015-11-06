@@ -83,10 +83,19 @@ static Ticker ticker;
 
 
 
-
-void receivedANCS(BlockStatic block)
+void receivedControl(BlockStatic block)
 {
-    DEBUGOUT("main: ANCS: %p\r\n", block.getData());
+    DEBUGOUT("main: Control: %p\r\n", block.getData());
+    for (std::size_t idx = 0; idx < block.getLength(); idx++)
+    {
+        DEBUGOUT("%02X", block.at(idx));
+    }
+    DEBUGOUT("\r\n");
+}
+
+void receivedAlert(BlockStatic block)
+{
+    DEBUGOUT("main: Alert: %p\r\n", block.getData());
     for (std::size_t idx = 0; idx < block.getLength(); idx++)
     {
         DEBUGOUT("%02X", block.at(idx));
@@ -97,6 +106,16 @@ void receivedANCS(BlockStatic block)
 void receivedEquip(BlockStatic block)
 {
     DEBUGOUT("main: Equip: %p\r\n", block.getData());
+    for (std::size_t idx = 0; idx < block.getLength(); idx++)
+    {
+        DEBUGOUT("%02X", block.at(idx));
+    }
+    DEBUGOUT("\r\n");
+}
+
+void receivedProxy(BlockStatic block)
+{
+    DEBUGOUT("main: Proxy: %p\r\n", block.getData());
     for (std::size_t idx = 0; idx < block.getLength(); idx++)
     {
         DEBUGOUT("%02X", block.at(idx));
@@ -122,7 +141,7 @@ void button1Task()
         block.at(idx) = idx;
     }
 
-    MessageCenter::sendTask(MessageCenter::RemoteHost, MessageCenter::ANCSPort, block, sendDone);
+    MessageCenter::sendTask(MessageCenter::RemoteHost, MessageCenter::ControlPort, block, sendDone);
 }
 
 void button1ISR()
@@ -168,8 +187,10 @@ void app_start(int, char *[])
 
     MessageCenter::addTransportTask(MessageCenter::RemoteHost, &transport);
 
-    MessageCenter::addListenerTask(MessageCenter::LocalHost, MessageCenter::ANCSPort, receivedANCS);
+    MessageCenter::addListenerTask(MessageCenter::LocalHost, MessageCenter::ControlPort, receivedControl);
+    MessageCenter::addListenerTask(MessageCenter::LocalHost, MessageCenter::AlertPort, receivedAlert);
     MessageCenter::addListenerTask(MessageCenter::LocalHost, MessageCenter::EquipPort, receivedEquip);
+    MessageCenter::addListenerTask(MessageCenter::LocalHost, MessageCenter::ProxyPort, receivedProxy);
 
     DEBUGOUT("Message Center: %s %s\r\n", __DATE__, __TIME__);
 }

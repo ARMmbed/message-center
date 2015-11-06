@@ -43,9 +43,10 @@ namespace MessageCenter
     } host_t;
 
     typedef enum {
-        ANCSPort  = 0x0110,
-        EquipPort = 0x0120,
-        ProxyPort = 0x0130
+        ControlPort = 0x0100,
+        AlertPort   = 0x0110,
+        EquipPort   = 0x0120,
+        ProxyPort   = 0x0130,
     } port_t;
 
     /*
