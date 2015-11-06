@@ -66,7 +66,7 @@ namespace MessageCenter
     */
     void sendTask(uint8_t host, uint16_t port, BlockStatic& block, FunctionPointer0<void> callback)
     {
-//        DEBUGOUT("sendTask\r\n");
+        DEBUGOUT("sendTask\r\n");
 
         // if host is local, bypass queue and send directly through dispatch
         if (host == LocalHost)
@@ -125,7 +125,7 @@ namespace MessageCenter
 */
 static void processQueueTask()
 {
-//    DEBUGOUT("processQueueTask\r\n");
+    DEBUGOUT("processQueueTask\r\n");
 
     // only process if queue is not empty
     if (sendQueue.size() > 0)
@@ -138,7 +138,15 @@ static void processQueueTask()
         // check for NULL pointer before dereferencing, and sending
         if (transport)
         {
-            transport->sendTask(action.port, action.block, sendDoneTask);
+            bool result = transport->sendTask(action.port, action.block, sendDoneTask);
+
+            if (result == false)
+            {
+                DEBUGOUT("MC: busy\r\n");
+
+                minar::Scheduler::postCallback(processQueueTask)
+                    .delay(minar::milliseconds(1000));
+            }
         }
     }
 }

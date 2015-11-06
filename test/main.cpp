@@ -17,7 +17,7 @@
 #include "message-center/MessageCenter.h"
 
 // control debug output
-#if 0
+#if 1
 #define DEBUGOUT(...) { printf(__VA_ARGS__); }
 #else
 #define DEBUGOUT(...) /* nothing */
