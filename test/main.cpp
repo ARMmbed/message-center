@@ -136,12 +136,25 @@ void button1Task()
 {
     DEBUGOUT("button 1\r\n");
 
-    for (std::size_t idx = 0; idx < block.getMaxLength(); idx++)
+    block.at(0) = 0x82; // size 2 array
+    block.at(1) = 0x01; // type 1
+
+    static bool toggle = true;
+
+    if (toggle)
     {
-        block.at(idx) = idx;
+        toggle = false;
+        block.at(2) = 0x00; // value 0
+    }
+    else
+    {
+        toggle = true;
+        block.at(2) = 0x01; // value 1
     }
 
-    MessageCenter::sendTask(MessageCenter::RemoteHost, MessageCenter::ControlPort, block, sendDone);
+    block.setLength(3);
+
+    MessageCenter::sendTask(MessageCenter::RemoteHost, MessageCenter::RadioPort, block, sendDone);
 }
 
 void button1ISR()
@@ -154,12 +167,25 @@ void button2Task()
 {
     DEBUGOUT("button 2\r\n");
 
-    for (std::size_t idx = 0; idx < block.getMaxLength(); idx++)
+    block.at(0) = 0x82; // size 2 array
+    block.at(1) = 0x02; // type 2
+
+    static bool toggle = true;
+
+    if (toggle)
     {
-        block.at(idx) = idx;
+        toggle = false;
+        block.at(2) = 0x00; // value 0
+    }
+    else
+    {
+        toggle = true;
+        block.at(2) = 0x01; // value 1
     }
 
-    MessageCenter::sendTask(MessageCenter::RemoteHost, MessageCenter::EquipPort, block, sendDone);
+    block.setLength(3);
+
+    MessageCenter::sendTask(MessageCenter::RemoteHost, MessageCenter::RadioPort, block, sendDone);
 }
 
 void button2ISR()

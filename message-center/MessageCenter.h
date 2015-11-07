@@ -45,8 +45,9 @@ namespace MessageCenter
     typedef enum {
         ControlPort = 0x0100,
         AlertPort   = 0x0110,
-        EquipPort   = 0x0120,
-        ProxyPort   = 0x0130,
+        RadioPort   = 0x0120,
+        EquipPort   = 0x0130,
+        ProxyPort   = 0x0140,
     } port_t;
 
     /*
