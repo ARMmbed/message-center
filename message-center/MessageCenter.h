@@ -48,6 +48,7 @@ namespace MessageCenter
         RadioPort   = 0x0120,
         EquipPort   = 0x0130,
         ProxyPort   = 0x0140,
+        SensorPort  = 0x0150
     } port_t;
 
     /*
