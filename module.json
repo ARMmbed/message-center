@@ -16,19 +16,16 @@
     }
   ],
   "dependencies": {
-    "message-center-transport": "^2.0.0",
-    "core-util": "^1.0.0",
-    "mbed-block": "^1.0.0"
+    "mbed-block": "^1.0.0",
+    "mbed-drivers": "^1.0.0",
+    "message-center-transport": "^3.0.0"
   },
   "targetDependencies": {
-    "efm32gg": {
-      "message-center-transport-spi-master": "^2.0.0"
+    "message-center-transport-spi-master": {
+      "message-center-transport-spi-master": "^3.0.0"
     },
-    "nrf51-generic": {
-      "message-center-transport-spi-slave": "^4.0.0"
+    "message-center-transport-spi-slave": {
+      "message-center-transport-spi-slave": "^5.0.0"
     }
-  },
-  "testDependencies": {
-    "mbed-drivers": "~0.11.0"
   }
 }
